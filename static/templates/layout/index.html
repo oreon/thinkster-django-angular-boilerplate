@@ -1,0 +1,16 @@
+<posts posts="vm.posts" ></posts>
+
+
+<div ng-controller="IndexController">
+	<ul>
+        <li ng-repeat="post in vm.posts" >
+        	{{post.content}}
+        </li>
+	</ul>
+</div>
+
+<a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-post"
+  href="javascript:void(0)"
+  ng-show="vm.isAuthenticated"
+  ng-dialog="/static/templates/posts/new-post.html"
+  ng-dialog-controller="NewPostController as vm"></a>

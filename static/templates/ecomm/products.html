@@ -1,0 +1,10 @@
+
+
+<h3>  PRODUCTS TO CHOOSE </h3>
+<div ng-controller="ProductsController">
+	<ul>
+        <li ng-repeat="product in vm.products" >
+        	{{product.name}} {{product.price}}  <button  class="btn btn-primary" ng-click="addToCart(product)">Add Me</button>
+        </li>
+	</ul>
+</div>

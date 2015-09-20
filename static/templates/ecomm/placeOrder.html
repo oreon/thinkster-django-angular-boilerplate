@@ -1,0 +1,37 @@
+<div ng-controller="CartController">
+	<form ng-submit="vm.placeOrder()"> 
+		
+	
+		<select name="custSelect" id="custSelect" ng-model="vm.order.order"  >
+			<option ng-repeat="cust in vm.customers" value="{{cust.url}}"  ng-selected="{{cust.url == vm.order.order}}"  >{{cust.firstName + "," + cust.lastName}}</option>
+		</select>
+		<br/>
+		<textarea name="Name" rows="4" cols="40" ng-model="vm.order.description"></textarea>
+		
+	
+	
+		
+		<div ng-repeat="item in vm.order.items">
+
+			<select name="repeatSelect" id="repeatSelect" ng-model="item.product.id"  >
+				<option ng-repeat="product in vm.products" value="{{product.id}}"  ng-selected="{{product.id == item.product.id}}"  >{{product.name}}</option>
+			</select>
+			
+			<input type="text" ng-model="item.qty"/>
+
+			<input type="text" ng-model="item.price"/>
+
+			<button ng-click="removeActivity(activity)">
+				Remove
+			</button>
+		</div>
+
+		<div class="addNew">
+			<button ng-click="vm.addNew()">
+				Add New
+			</button>
+		</div>
+
+		<input type="submit" id="submit" value="Submit" class="btn btn-primary" />
+	</form>
+</div>
