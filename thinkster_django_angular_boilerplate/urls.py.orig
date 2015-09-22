@@ -1,0 +1,53 @@
+from django.conf.urls import patterns, url, include
+<<<<<<< HEAD
+from django.contrib import admin
+from rest_framework_nested import routers
+
+from authentication.views import AccountViewSet, LoginView, LogoutView
+from posts.views import *
+=======
+from rest_framework import routers
+
+from authentication.views import AccountViewSet, LoginView, LogoutView
+>>>>>>> 4dfad8d0c76d232f9bdfd966f8125a994371396f
+from thinkster_django_angular_boilerplate.views import IndexView
+
+
+router = routers.SimpleRouter()
+router.register(r'accounts', AccountViewSet)
+
+<<<<<<< HEAD
+router.register(r'posts', PostViewSet)
+
+router.register(r'customers', CustomerViewSet)
+router.register(r'fullCustomers', FullCustomerViewSet)
+
+router.register(r'orderItems', OrderItemViewSet)
+router.register(r'products',ProductViewSet)
+router.register(r'customerOrders', CustomerOrderViewSet)
+
+
+
+accounts_router = routers.NestedSimpleRouter(
+    router, r'accounts', lookup='account'
+)
+accounts_router.register(r'posts', AccountPostsViewSet)
+
+
+=======
+>>>>>>> 4dfad8d0c76d232f9bdfd966f8125a994371396f
+urlpatterns = patterns(
+    '',
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),
+    url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
+<<<<<<< HEAD
+    url(r'^admin/', include(admin.site.urls)),
+    
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/', include(accounts_router.urls)),
+=======
+>>>>>>> 4dfad8d0c76d232f9bdfd966f8125a994371396f
+    url('^.*$', IndexView.as_view(), name='index'),
+   
+)
