@@ -4,6 +4,10 @@ var Customers = angular.module('thinkster.ecomm.services').factory('Customers', 
   return djResource('/api/v1/customers/:id/'); // Note the full endpoint address
 });
 
+var AllProducts = angular.module('thinkster.ecomm.services').factory('AllProducts', function(djResource) {
+	  return djResource('/api/v1/allProducts/:id/'); // Note the full endpoint address
+});
+
 /**
  * Posts
  * 

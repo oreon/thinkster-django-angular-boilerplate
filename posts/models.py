@@ -17,7 +17,7 @@ class Post(models.Model):
     
     
 class Product(models.Model):
-    author = models.ForeignKey(Account)
+    #author = models.ForeignKey(Account, null = True)
     description = models.TextField(null = True)
     name = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=8, decimal_places=2)

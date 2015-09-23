@@ -2,13 +2,14 @@ from django.shortcuts import render
 import django_filters
 from rest_framework import filters
 from rest_framework import permissions, viewsets, authentication
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from posts.models import Post, Customer, CustomerOrder, Product, OrderItem
 from posts.permissions import IsAuthorOfPost
 from posts.serializers import PostSerializer, CustomerSerializer, \
     CustomerOrderSerializer, ProductSerializer, OrderItemSerializer, \
-    FullCustomerSerializer
+    FullCustomerSerializer, AllProductSerializer
 
 
 class DefaultsMixin(object):
@@ -73,6 +74,8 @@ class CustomerOrderViewSet(viewsets.ModelViewSet):
     queryset = CustomerOrder.objects.all()
     serializer_class = CustomerOrderSerializer
     
+    
+        
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
@@ -100,8 +103,19 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
-    #filter_backends = (filters.DjangoFilterBackend,)
-    #filter_class = ProductFilter
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = ProductFilter
+    
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 10000
+    page_size_query_param = 'page_size'
+    max_page_size = 100000
+    
+class AllProductViewSet(ProductViewSet):
+    pagination_class = LargeResultsSetPagination
+    serializer_class = AllProductSerializer
+    
+    
 
     
     

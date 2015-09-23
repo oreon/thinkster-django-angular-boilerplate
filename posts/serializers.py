@@ -16,15 +16,21 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(PostSerializer, self).get_validation_exclusions()
-
+        
         return exclusions + ['author']
     
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Product
         
+
+class AllProductSerializer(ProductSerializer):
+
+    class Meta:
+        model = Product
+        fields = ('url', 'name', 'price', )       
         
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     #url = serializers.CharField(source='__str__', read_only=True)
@@ -33,23 +39,38 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
         
+ 
      
         
 
         
 class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
     
-    #product = ProductSerializer(read_only=True)
+    #customerOrder = CustomerOrderSerializer(required=False)
     
     class Meta:
-        model = OrderItem 
+        model = OrderItem
+        #fields = ('product', 'qty')
+        exclude = ('customerOrder',)
+        
+    
         
 class CustomerOrderSerializer(serializers.HyperlinkedModelSerializer):
-    orderItems = OrderItemSerializer(many=True, read_only=True)
+    orderItems = OrderItemSerializer(many=True)
     
     class Meta:
         model = CustomerOrder
-#        fields = ('description', 'order', 'orderItems')
+        
+        #fields = ('description', 'order', 'orderItems')
+    def create(self, validated_data):
+        orderItems = validated_data.pop('orderItems')
+        customerOrder = CustomerOrder.objects.create(**validated_data)
+        for oi in orderItems:
+            OrderItem.objects.create(customerOrder=customerOrder, **oi)
+        return customerOrder
+
+    
+        
 
 
 class FullCustomerSerializer(serializers.ModelSerializer):

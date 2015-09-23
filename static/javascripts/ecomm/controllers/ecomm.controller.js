@@ -53,16 +53,16 @@
  */
 (function() {
 	'use strict';
-
+	
 	angular.module('thinkster.ecomm.controllers').controller('CartController',
 			CartController);
 
-	CartController.$inject = [ '$scope', 'Products', 'Checkout', 'Customers' ];
+	CartController.$inject = [ '$scope', 'AllProducts', 'Checkout', 'Customers' ];
 
 	/**
 	 * @namespace ProductsController
 	 */
-	function CartController($scope, Products, Checkout, Customers) {
+	function CartController($scope, AllProducts, Checkout, Customers) {
 		var vm = this;
 
 		vm.products = [];
@@ -76,17 +76,12 @@
 		};
 
 		vm.items = [ {
-
-			product : {
-				id : 1,
-			},
+			product : "http://localhost:8000/api/v1/products/1/",
 			qty : 10,
 			price : 20
 		}, {
 
-			product : {
-				id : 2,
-			},
+			product :  "http://localhost:8000/api/v1/products/2/",
 			qty : 1,
 			price : 100
 		} ];
@@ -101,10 +96,10 @@
 		 * @memberOf thinkster.products.controllers.ProductsController
 		 */
 		function activate() {
-			Products.all().then(postsSuccessFn, postsErrorFn);
+			vm.products = AllProducts.query();//.then(postsSuccessFn, postsErrorFn);
 
 			function postsSuccessFn(data, status, headers, config) {
-				vm.products = data.data;
+				 //data.data;
 			}
 
 			function postsErrorFn(data, status, headers, config) {
@@ -112,7 +107,7 @@
 			}
 			
 			vm.customers = Customers.query(function (data){
-				//vm.customers = data.data;
+				
 			})
 
 		}
@@ -150,7 +145,9 @@
 		}
 
 		vm.placeOrder = function() {
-			alert(vm.order.order)
+			//alert(vm.order.order)
+			vm.order.orderItems = vm.items;
+			console.log(vm.order.orderItems);
 			Checkout.placeOrder(vm.order);
 		}
 

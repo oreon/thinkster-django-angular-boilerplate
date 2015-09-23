@@ -14,6 +14,7 @@ router.register(r'posts', PostViewSet)
 
 router.register(r'customers', CustomerViewSet)
 router.register(r'fullCustomers', FullCustomerViewSet)
+router.register(r'allProducts',AllProductViewSet)
 
 router.register(r'orderItems', OrderItemViewSet)
 router.register(r'products',ProductViewSet)
