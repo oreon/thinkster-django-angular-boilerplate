@@ -31,7 +31,10 @@ class Customer(models.Model):
     
     def __str__(self):
         return self.firstName + " " + self.lastName 
-
+    
+    @property
+    def name(self):
+        return ''.join([self.lastname,' ,', self.firstName])
 
 class CustomerOrder(models.Model):
     order = models.ForeignKey(Customer, related_name='customerOrders')
@@ -41,6 +44,10 @@ class CustomerOrder(models.Model):
         #result = self.description if self.description else ""
         #return  self.description + ":" + self.order.__str__()
         return self.order.__str__()
+    @property
+    def name(self):
+        return ''.join(
+            [self.lastname,' ,', self.firstname, ' ', self.middlename])
     
     
 class OrderItem(models.Model):

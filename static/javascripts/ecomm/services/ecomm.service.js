@@ -1,12 +1,48 @@
 
 
-var Customers = angular.module('thinkster.ecomm.services').factory('Customers', function(djResource) {
-  return djResource('/api/v1/customers/:id/'); // Note the full endpoint address
+var Customers = angular.module('thinkster.ecomm.services').factory('Customers', function($resource) {
+	return $resource('/api/v1/customers/:id', {id:'@id'},{
+		  query : {
+			    method : 'GET',
+			    isArray : false
+			  }
+			});
 });
 
-var AllProducts = angular.module('thinkster.ecomm.services').factory('AllProducts', function(djResource) {
-	  return djResource('/api/v1/allProducts/:id/'); // Note the full endpoint address
+
+var AllProducts = angular.module('thinkster.ecomm.services').factory('AllProducts', function($resource) {
+	return $resource('/api/v1/allProducts/:id', {id:'@id'},{
+		  query : {
+			    method : 'GET',
+			    isArray : false
+			  }
+			});
 });
+
+
+var CustomerOrders = angular.module('thinkster.ecomm.services').factory('CustomerOrders', function($resource) {
+	var res =  $resource('/api/v1/customerOrders/:id/', {id:'@id', page:'@page'},{
+		  query : {
+			    method : 'GET',
+			    isArray : false
+			  },
+		'update': { method:'PUT' },
+		'create': { method:'POST' }
+			});
+	
+	res.prototype.$save = function() {
+	    if (this.id) {
+	        return this.$update();
+	    } else {
+	        return this.$create();
+	    }
+	};
+	
+	return res;
+});
+
+
+
 
 /**
  * Posts
@@ -102,21 +138,11 @@ var AllProducts = angular.module('thinkster.ecomm.services').factory('AllProduct
 	    }
 	    
 	    /*
-	    function placeOrder2() {
-	    	return $http.post('/api/v1/customerOrders/', {
-	    		 "orderItems": [
-	    		                {
-	    		                    "product": "2",
-	    		                    "qty": 1,
-	    		                   // "customerOrder":
-									// "http://localhost:8000/api/v1/customerOrders/1/"
-	    		                }
-	    		            ],
-	    		            "description": "this is a good one",
-	    		            "order": "1"
-	          });
-	      }
-	    */
+		 * function placeOrder2() { return $http.post('/api/v1/customerOrders/', {
+		 * "orderItems": [ { "product": "2", "qty": 1, // "customerOrder": //
+		 * "http://localhost:8000/api/v1/customerOrders/1/" } ], "description":
+		 * "this is a good one", "order": "1" }); }
+		 */
 	  }
 })();	  
 	  

@@ -53,41 +53,34 @@
  */
 (function() {
 	'use strict';
-	
+
 	angular.module('thinkster.ecomm.controllers').controller('CartController',
 			CartController);
 
-	CartController.$inject = [ '$scope', 'AllProducts', 'Checkout', 'Customers' ];
+	CartController.$inject = [ '$scope', '$routeParams', '$location',
+			'AllProducts', 'Checkout', 'Customers', 'CustomerOrders' ];
 
 	/**
 	 * @namespace ProductsController
 	 */
-	function CartController($scope, AllProducts, Checkout, Customers) {
+	function CartController($scope, $routeParams, $location, AllProducts,
+			Checkout, Customers, CustomerOrders) {
 		var vm = this;
 
 		vm.products = [];
 		vm.customers = [];
+		vm.customerOrders = [];
 
-		// vm.orderItems = [];
-
-		vm.order = {
-			"description" : "THIS IS ASWESOME",
-			"order" : "" 
-		};
-
-		vm.items = [ {
-			product : "http://localhost:8000/api/v1/products/1/",
-			qty : 10,
-			price : 20
-		}, {
-
-			product :  "http://localhost:8000/api/v1/products/2/",
-			qty : 1,
-			price : 100
-		} ];
-
-		vm.order.items = vm.items;
-
+		vm.order = {};
+		/*
+		 * vm.items = [ { product : "http://localhost:8000/api/v1/products/1/",
+		 * qty : 10, price : 20 }, {
+		 * 
+		 * product : "http://localhost:8000/api/v1/products/2/", qty : 1, price :
+		 * 100 } ];
+		 * 
+		 * //vm.order.items = vm.items;
+		 */
 		activate();
 
 		/**
@@ -96,34 +89,66 @@
 		 * @memberOf thinkster.products.controllers.ProductsController
 		 */
 		function activate() {
-			vm.products = AllProducts.query();//.then(postsSuccessFn, postsErrorFn);
+
+			// alert("hi all ");
+
+			Customers.query(function(data) {
+				angular.forEach(data, function(item) {
+					if (angular.isArray(item))
+						vm.customers = item;
+				});
+			});
+
+			AllProducts.query(function(data) {
+				angular.forEach(data, function(item) {
+					if (angular.isArray(item))
+						vm.products = item;
+				});
+			});// .then(postsSuccessFn,
+			// postsErrorFn);
+
+			console.log(vm.products);
+
+			var id = $routeParams.id;
+
+			if (id) {
+				
+				
+				if (id > 0) {
+					vm.order = CustomerOrders.get({
+						id : $routeParams.id
+					});
+					
+					
+				}else{
+					vm.order  =  new CustomerOrders;
+					vm.order.orderItems = [];
+				}
+
+			} else {
+				CustomerOrders.query({page:8}, function(data) {
+					angular.forEach(data, function(item) {
+						console.log(item);
+						if (angular.isArray(item))
+							vm.customerOrders = item;
+					});
+				});
+			}
 
 			function postsSuccessFn(data, status, headers, config) {
-				 //data.data;
+				// data.data;
 			}
 
 			function postsErrorFn(data, status, headers, config) {
 				// Snackbar.error(data.error);
 			}
-			
-			vm.customers = Customers.query(function (data){
-				
-			})
-
-		}
-
-		function addToCart(product) {
+			;
 
 		}
 
 		vm.addNew = function() {
-			/*
-			 * var updatedActivities = { id : 6433, name : "Call", points : 5 };
-			 */
-
 			var item = {}
-			alert('Called')
-			vm.items.push(item);
+			vm.order.orderItems.push(item);
 		}
 
 		function edit(activity) {
@@ -131,7 +156,9 @@
 			console.log(selectedActivity);
 		}
 
-		vm.remove = function(activity) {
+		vm.remove = function(index) {
+			alert("remvoing " + index);
+			/*
 			activityId = activity.id; // the activity id
 
 			var i = 0;
@@ -139,16 +166,21 @@
 				if ($scope.activities[item].id == activityId)
 					break;
 				i++;
-			}
+			}*/
 
-			$scope.activities.splice(i, 1);
+			vm.order.orderItems.splice(index, 1);
 		}
 
 		vm.placeOrder = function() {
-			//alert(vm.order.order)
-			vm.order.orderItems = vm.items;
+			alert("in order")
+			// vm.order.orderItems = vm.items;
 			console.log(vm.order.orderItems);
-			Checkout.placeOrder(vm.order);
+			vm.order.$save(/*
+								 * , function(data) { }
+								 */);
+
+			$location.url('/orders');
+
 		}
 
 	}

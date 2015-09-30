@@ -16,8 +16,8 @@ class DefaultsMixin(object):
     """Default settings for view authentication, permissions,
     filtering and pagination."""
     authentication_classes = (
-        authentication.BasicAuthentication,
-        authentication.TokenAuthentication,
+        authentication.SessionAuthentication,
+        #authentication.TokenAuthentication,
     )
     permission_classes = (
         permissions.IsAuthenticated,
@@ -67,7 +67,7 @@ class FullCustomerViewSet(viewsets.ModelViewSet):
     serializer_class = FullCustomerSerializer
     
     
-class CustomerOrderViewSet(viewsets.ModelViewSet):
+class CustomerOrderViewSet(DefaultsMixin, viewsets.ModelViewSet):
     """
     A viewset that provides the standard actions
     """

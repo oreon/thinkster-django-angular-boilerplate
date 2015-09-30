@@ -56,6 +56,8 @@ class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
     
         
 class CustomerOrderSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField()
+    
     orderItems = OrderItemSerializer(many=True)
     
     class Meta:
@@ -70,7 +72,12 @@ class CustomerOrderSerializer(serializers.HyperlinkedModelSerializer):
         return customerOrder
 
     
-        
+    def update(self, instance, validated_data):
+        OrderItem.objects.filter(customerOrder=instance).delete()
+        orderItems = validated_data.pop('orderItems')
+        for oi in orderItems:
+            OrderItem.objects.create(customerOrder=instance, **oi)
+        return super(CustomerOrderSerializer, self).update( instance, validated_data)
 
 
 class FullCustomerSerializer(serializers.ModelSerializer):

@@ -1,37 +1,31 @@
 <div ng-controller="CartController">
-	<form ng-submit="vm.placeOrder()"> 
-		
-	
-		<select name="custSelect" id="custSelect" ng-model="vm.order.order"  >
-			<option ng-repeat="cust in vm.customers" value="{{cust.url}}"  ng-selected="{{cust.url == vm.order.order}}"  >{{cust.firstName + "," + cust.lastName}}</option>
-		</select>
-		<br/>
-		<textarea name="Name" rows="4" cols="40" ng-model="vm.order.description"></textarea>
-		
-	
-	
-		
-		<div ng-repeat="item in vm.order.items">
+	<form ng-submit="vm.placeOrder()">
 
-			<select name="repeatSelect" id="repeatSelect" ng-model="item.product"  >
-				<option ng-repeat="product in vm.products" value="{{product.url}}"  ng-selected="{{product.url == item.product}}"  >{{product.name}}</option>
-			</select>
-			
-			<input type="text" ng-model="item.qty"/>
 
-			<input type="text" ng-model="item.price"/>
+		<select name="custSelect" id="custSelect" ng-model="vm.order.order">
+			<option ng-repeat="cust in vm.customers" value="{{cust.url}}"
+				ng-selected="{{cust.url == vm.order.order}}">{{cust.firstName
+				+ "," + cust.lastName}}</option>
+		</select> <br />
+		<textarea name="Name" rows="4" cols="40"
+			ng-model="vm.order.description"></textarea>
 
-			<button ng-click="removeActivity(activity)">
-				Remove
-			</button>
+		<div ng-repeat="item in vm.order.orderItems">
+
+			{{$index}}<select name="repeatSelect" id="repeatSelect" ng-model="item.product">
+				<option ng-repeat="product in vm.products" value="{{product.url}}"
+					ng-selected="{{product.url == item.product}}">{{product.name}}</option>
+			</select> <input type="text" ng-model="item.qty" /> <input type="text"
+				ng-model="item.price" />
+
+			<button  type="button" ng-click="vm.remove($index)">Remove</button>
 		</div>
 
 		<div class="addNew">
-			<button ng-click="vm.addNew()">
-				Add New
-			</button>
+			<button type="button"  class="btn btn-primary" ng-click="vm.addNew()">Add New</button>
 		</div>
 
-		<input type="submit" id="submit" value="Submit" class="btn btn-primary" />
+		<input type="submit" id="submit" value="Submit"
+			class="btn btn-primary" />
 	</form>
 </div>

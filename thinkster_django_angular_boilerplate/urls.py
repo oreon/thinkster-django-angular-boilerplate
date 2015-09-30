@@ -7,7 +7,8 @@ from posts.views import *
 from thinkster_django_angular_boilerplate.views import IndexView
 
 
-router = routers.SimpleRouter()
+router = routers.SimpleRouter(trailing_slash=False)
+
 router.register(r'accounts', AccountViewSet)
 
 router.register(r'posts', PostViewSet)

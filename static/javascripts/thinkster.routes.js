@@ -23,12 +23,21 @@
 			controller : 'ProductsController',
 			controllerAs : 'vm',
 			templateUrl : '/static/templates/ecomm/products.html'
+				
+		}).when('/orders', {
+			controller : 'CartController',
+			controllerAs : 'vm',
+			templateUrl : '/static/templates/ecomm/orders.html'
+		}).when('/orders/:id', {
+			controller : 'CartController',
+			controllerAs : 'vm',
+			templateUrl : '/static/templates/ecomm/placeOrder.html'
+	
 		}).when('/cart', {
 			controller : 'CartController',
 			controllerAs : 'vm',
 			templateUrl : '/static/templates/ecomm/placeOrder.html'
 		
-
 		}).when('/+:username/settings', {
 			controller : 'ProfileSettingsController',
 			controllerAs : 'vm',
