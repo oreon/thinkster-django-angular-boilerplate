@@ -37,6 +37,16 @@
 			controller : 'CartController',
 			controllerAs : 'vm',
 			templateUrl : '/static/templates/ecomm/placeOrder.html'
+				
+		}).when('/leagues', {
+            templateUrl: '/static/templates/leagues/leagues.html',
+            controller: 'LeaguesCtrl',
+            controllerAs: 'vm',
+            resolve: {
+                initialData: ['eliteApi', function (eliteApi) {
+                    return eliteApi.getLeagues();
+                }]
+            }
 		
 		}).when('/+:username/settings', {
 			controller : 'ProfileSettingsController',

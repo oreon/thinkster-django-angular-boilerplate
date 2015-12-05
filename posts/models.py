@@ -1,6 +1,7 @@
 from django.db import models
 
 from authentication.models import Account
+from datetime import datetime
 
 
 # Create your models here.
@@ -37,17 +38,17 @@ class Customer(models.Model):
         return ''.join([self.lastname,' ,', self.firstName])
 
 class CustomerOrder(models.Model):
-    order = models.ForeignKey(Customer, related_name='customerOrders')
+    customer = models.ForeignKey(Customer, related_name='customerOrders')
     description = models.TextField(null = False, blank = True, default= "")
     
     def __str__(self):
         #result = self.description if self.description else ""
-        #return  self.description + ":" + self.order.__str__()
-        return self.order.__str__()
+        #return  self.description + ":" + self.customer.__str__()
+        return self.customer.__str__()
     @property
     def name(self):
-        return ''.join(
-            [self.lastname,' ,', self.firstname, ' ', self.middlename])
+        return ''.join(self.customer.firstName , ',', self.customer.lastName);
+            
     
     
 class OrderItem(models.Model):
@@ -55,5 +56,33 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product)
     qty = models.IntegerField(default = 1)
     
+class Location(models.Model):
+    name = models.CharField(max_length=30)
+    def __str__(self):
+        return self.name;
     
+    
+class League(models.Model):
+    name = models.CharField(max_length=30)
+    def __str__(self):
+        return self.name;
+    
+
+class Team(models.Model):
+    name = models.CharField(max_length=30)
+    coach = models.CharField(max_length=30)
+    divisionName = models.CharField(max_length=30)
+    league = models.ForeignKey(League)
+    def __str__(self):
+        return self.name;
+    
+    
+class Game(models.Model):
+    team1 = models.ForeignKey(Team, related_name='team1')
+    team2 = models.ForeignKey(Team, related_name='team2')
+    league = models.ForeignKey(League)
+    time = models.DateTimeField
+    location = models.ForeignKey(Location)
+    team1Score = models.IntegerField(default = 1) 
+    team2Score = models.IntegerField(default = 1)
     

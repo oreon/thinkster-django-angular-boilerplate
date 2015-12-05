@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from authentication.serializers import Account, AccountSerializer
-from posts.models import Post, Product, Customer, CustomerOrder, OrderItem
-
+from posts.models import Post, Product, Customer, CustomerOrder, OrderItem, \
+    League, Game, Team, Location
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -39,15 +39,10 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Customer
         
- 
-     
-        
-
         
 class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
     
     #customerOrder = CustomerOrderSerializer(required=False)
-    
     class Meta:
         model = OrderItem
         #fields = ('product', 'qty')
@@ -90,4 +85,32 @@ class FullCustomerSerializer(serializers.ModelSerializer):
         
 
 
-
+class LocationSerializer(serializers.HyperlinkedModelSerializer):
+    #url = serializers.CharField(source='__str__', read_only=True)
+    id = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = Location
+        
+class LeagueSerializer(serializers.HyperlinkedModelSerializer):
+    #url = serializers.CharField(source='__str__', read_only=True)
+    id = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = League
+        
+        
+class GameSerializer(serializers.HyperlinkedModelSerializer):
+    #url = serializers.CharField(source='__str__', read_only=True)
+    id = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = Game
+        
+class TeamSerializer(serializers.HyperlinkedModelSerializer):
+    #url = serializers.CharField(source='__str__', read_only=True)
+    id = serializers.ReadOnlyField()
+    
+    class Meta:
+        model = Team
+        

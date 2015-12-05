@@ -28,7 +28,7 @@ var CustomerOrders = angular.module('thinkster.ecomm.services').factory('Custome
 			  },
 		'update': { method:'PUT' },
 		'create': { method:'POST' }
-			});
+	});
 	
 	res.prototype.$save = function() {
 	    if (this.id) {

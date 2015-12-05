@@ -12,13 +12,16 @@
   ],
   "dependencies": {
     "angular": "~1.4.6",
-    "angular-route": "~1.4.6",
+    "angular-bootstrap": "~0.13.4",
     "angular-cookies": "~1.4.6",
-    "angular-resource":"~1.4.6",	
+    "angular-resource": "~1.4.6",
+    "angular-route": "~1.4.6",
     "bootstrap": "~3.3.0",
     "bootstrap-material-design": "~0.1.5",
+    "breeze-client": "~1.5.4",
     "jquery": "~2.1.1",
     "ngDialog": "~0.3.3",
+    "ui.bootstrap": "~0.13.4",
     "underscore": "~1.7.0"
   }
 }

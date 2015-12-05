@@ -5,11 +5,13 @@ from rest_framework import permissions, viewsets, authentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-from posts.models import Post, Customer, CustomerOrder, Product, OrderItem
+from posts.models import Post, Customer, CustomerOrder, Product, OrderItem, \
+    League, Team, Game, Location
 from posts.permissions import IsAuthorOfPost
 from posts.serializers import PostSerializer, CustomerSerializer, \
     CustomerOrderSerializer, ProductSerializer, OrderItemSerializer, \
-    FullCustomerSerializer, AllProductSerializer
+    FullCustomerSerializer, AllProductSerializer, LeagueSerializer, \
+    TeamSerializer, GameSerializer, LocationSerializer
 
 
 class DefaultsMixin(object):
@@ -75,8 +77,6 @@ class CustomerOrderViewSet(DefaultsMixin, viewsets.ModelViewSet):
     serializer_class = CustomerOrderSerializer
     
     
-        
-
 
 class OrderItemViewSet(viewsets.ModelViewSet):
     """
@@ -116,7 +116,34 @@ class AllProductViewSet(ProductViewSet):
     serializer_class = AllProductSerializer
     
     
-
+class LeagueViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
+    
+class LocationViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    
+    
+class TeamViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """ 
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+    
+class GameViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
     
     
     

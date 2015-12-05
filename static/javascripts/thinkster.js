@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('thinkster', [ 'thinkster.config', 'thinkster.routes',  'thinkster.utils',
-			'thinkster.authentication'  , 'thinkster.layout', 'thinkster.posts'  , 'thinkster.profiles'  , 'thinkster.ecomm' , 'ngResource']);
+			'thinkster.authentication'  , 'thinkster.layout', 'thinkster.posts'  , 'thinkster.profiles'  , 'thinkster.ecomm' , 'ngResource'  , 'ui.bootstrap']);
 
 	angular.module('thinkster.routes', [ 'ngRoute' ]);
 	

@@ -70,6 +70,12 @@
 		vm.products = [];
 		vm.customers = [];
 		vm.customerOrders = [];
+		
+		vm.itemCount = 55;
+		vm.currentPage = 1;
+		vm.maxSize =6;
+		vm.numPages = 11;
+		
 
 		vm.order = {};
 		/*

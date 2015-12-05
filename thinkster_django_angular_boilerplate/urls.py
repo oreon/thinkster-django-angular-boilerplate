@@ -21,6 +21,12 @@ router.register(r'orderItems', OrderItemViewSet)
 router.register(r'products',ProductViewSet)
 router.register(r'customerOrders', CustomerOrderViewSet)
 
+router.register(r'leagues', LeagueViewSet)
+router.register(r'teams', TeamViewSet)
+router.register(r'games', GameViewSet)
+router.register(r'locations', LocationViewSet)
+
+
 
 
 accounts_router = routers.NestedSimpleRouter(

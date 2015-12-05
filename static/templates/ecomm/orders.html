@@ -11,14 +11,17 @@
 			<tr ng-repeat="customerOrder in vm.customerOrders">
 				<td>{{customerOrder.id}} {{customerOrder.order.firstName}}</td>
 				<td>{{customerOrder.description}}</td>
-				<td><a class="btn btn-primary"
-					ui-sref="viewMovie({id:movie._id})">View</a> 
+				<td><a class="btn btn-primary">View</a> 
 					<a class="btn btn-primary" href="orders/{{customerOrder.id}}">Edit</a>
 					<a class="btn btn-danger" ng-click="deleteMovie(customerOrder)">Delete</a>
 			</td>
 			</tr>
 		</tbody>
-
+		
+		 
 	</table>
 
+	<div> <pagination total-items="vm.itemCount" ng-model="vm.currentPage" max-size="vm.maxSize" class="pagination-sm"
+		 boundary-links="true" rotate="false" num-pages="vm.numPages"></pagination></div>
+	
 </div>
